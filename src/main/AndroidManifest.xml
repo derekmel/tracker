@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.derekm.studenttracker">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.terms.termsListActivity" />
+        <activity android:name=".activities.terms.newTermActivity" />
+        <activity android:name=".activities.terms.termResultsActivity" />
+        <activity android:name=".activities.courses.coursesActivity" />
+        <activity android:name=".activities.courses.newCourseActivity" />
+        <activity android:name=".activities.courses.courseResultsActivity" />
+        <activity android:name=".activities.assessments.assesmentsActivity" />
+        <activity
+            android:name=".activities.courses.notesActivity"
+            android:label="@string/title_activity_notes"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

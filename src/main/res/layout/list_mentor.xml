@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/list_mentor">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".95"
+        android:gravity="center_vertical"
+        android:id="@+id/list_m_name"
+        android:text="Name"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".95"
+        android:gravity="center_vertical"
+        android:id="@+id/list_m_phone"
+        android:text="Phone"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".95"
+        android:gravity="center_vertical"
+        android:id="@+id/list_m_email"
+        android:text="email" />
+
+    <Button
+        android:id="@+id/remove_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:onClick="removeMentorButtonHandler"
+        android:text="Remove"
+        android:textSize="10sp" />
+
+</LinearLayout>
