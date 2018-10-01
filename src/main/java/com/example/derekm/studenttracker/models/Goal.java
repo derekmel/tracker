@@ -2,23 +2,23 @@ package com.example.derekm.studenttracker.models;
 
 public class Goal {
 
-    private int goalDateId;
+    private long goalDateId;
     private String description;
     private String datetime;
-    private int assessmentId;
+    private long assessmentId;
 
-    public Goal(int goalDateId, String description, String datetime, int assessmentId) {
+    public Goal(long goalDateId, String description, String datetime, long assessmentId) {
         this.goalDateId = goalDateId;
         this.description = description;
         this.datetime = datetime;
         this.assessmentId = assessmentId;
     }
 
-    public int getGoalDateId() {
+    public long getGoalDateId() {
         return goalDateId;
     }
 
-    public void setGoalDateId(int goalDateId) {
+    public void setGoalDateId(long goalDateId) {
         this.goalDateId = goalDateId;
     }
 
@@ -38,11 +38,11 @@ public class Goal {
         this.datetime = datetime;
     }
 
-    public int getAssessmentId() {
+    public long getAssessmentId() {
         return assessmentId;
     }
 
-    public void setAssessmentId(int assessmentId) {
+    public void setAssessmentId(long assessmentId) {
         this.assessmentId = assessmentId;
     }
 }

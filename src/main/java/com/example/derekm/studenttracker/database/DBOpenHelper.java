@@ -228,7 +228,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_TERMS, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            long id = cursor.getInt(0);
+            long id = cursor.getLong(0);
             String name = cursor.getString(1);
             String start = cursor.getString(2);
             String end = cursor.getString(3);
@@ -363,7 +363,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
     //notes stuff
-    public void insertNote(int courseId, String noteText) {
+    public void insertNote(long courseId, String noteText) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COURSE_NOTE_COURSE_ID, courseId);
@@ -383,12 +383,12 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
     }
 
-    public void deleteNote(int id) {
+    public void deleteNote(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_COURSE_NOTES, COURSE_NOTES_TABLE_ID + " = " + id, null);
     }
 
-    public ArrayList<Note> getNotes(int courseId) {
+    public ArrayList<Note> getNotes(long courseId) {
         ArrayList<Note> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
@@ -397,9 +397,9 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
         res.moveToFirst();
         while (!res.isAfterLast()) {
-            int id = res.getInt(0);
+            long id = res.getInt(0);
             String note = res.getString(1);
-            int coursenId = res.getInt(2);
+            long coursenId = res.getLong(2);
             a.add(new Note(id, note, coursenId));
             res.moveToNext();
         }
@@ -438,7 +438,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
             String name,
             String type,
             String datetime,
-            int courseId,
+            long courseId,
             ArrayList<GoalDate> goalDates
     ) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -460,7 +460,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
     public boolean updateAssessment(
-            int id,
+            long id,
             String name,
             String type,
             String datetime,
@@ -488,26 +488,26 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         return true;
     }
 
-    public Assessment getAssessment(int _id) {
+    public Assessment getAssessment(long id) {
         Assessment assessment;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " + TABLE_ASSESSMENTS + " WHERE " + ASSESSMENTS_TABLE_ID + " = " + _id,
+                "SELECT * FROM " + TABLE_ASSESSMENTS + " WHERE " + ASSESSMENTS_TABLE_ID + " = " + id,
                 null
         );
         res.moveToFirst();
         assessment = new Assessment(
-                res.getInt(0),
+                res.getLong(0),
                 res.getString(1),
                 res.getString(2),
                 res.getString(3),
-                res.getInt(4)
+                res.getLong(4)
         );
         res.close();
         return assessment;
     }
 
-    public ArrayList<Assessment> getAssessments(int courseId) {
+    public ArrayList<Assessment> getAssessments(long courseId) {
         ArrayList<Assessment> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
@@ -516,12 +516,12 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
         res.moveToFirst();
         while (!res.isAfterLast()) {
-            int mId = res.getInt(0);
+            long mId = res.getLong(0);
             String name = res.getString(1);
             String type = res.getString(2);
             String due = res.getString(3);
-            int rcourseId = res.getInt(4);
-            a.add(new Assessment(mId, name, type, due, rcourseId));
+            long tcourseId = res.getLong(4);
+            a.add(new Assessment(mId, name, type, due, tcourseId));
             res.moveToNext();
         }
         res.close();
@@ -531,7 +531,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
 
-    public boolean deleteAssessment(int id, int assessmentId) {
+    public boolean deleteAssessment(long id, long assessmentId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ASSESSMENTS, ASSESSMENTS_TABLE_ID + " = " + id, null);
         db.delete(TABLE_GOAL, GOAL_ASSESSMENT_ID + " = " + assessmentId, null);
@@ -542,7 +542,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
     //goal stuff
 
- /*   public ArrayList<GoalDate> getGoalDates(int assessmentId) {
+ /*   public ArrayList<GoalDate> getGoalDates(long assessmentId) {
         ArrayList<GoalDate> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(

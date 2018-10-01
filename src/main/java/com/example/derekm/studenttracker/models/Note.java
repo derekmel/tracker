@@ -2,11 +2,11 @@ package com.example.derekm.studenttracker.models;
 
 public class Note {
 
-    private int noteId;
+    private long noteId;
     private String note;
-    private int courseId;
+    private long courseId;
 
-    public Note(int noteId, String note, int courseId) {
+    public Note(long noteId, String note, long courseId) {
         this.noteId = noteId;
         this.note = note;
         this.courseId = courseId;
@@ -20,15 +20,15 @@ public class Note {
                 '}';
     }
 
-    public int getNoteId() { return noteId; }
+    public long getNoteId() { return noteId; }
 
-    public void setNoteId(int noteId) { this.noteId = noteId; }
+    public void setNoteId(long noteId) { this.noteId = noteId; }
 
     public String getNote() { return note; }
 
     public void setNote(String note) { this.note = note; }
 
-    public int getCourseId() { return this.courseId; }
+    public long getCourseId() { return this.courseId; }
 
-    public void setCourseId(int courseId) { this.courseId = courseId; }
+    public void setCourseId(long courseId) { this.courseId = courseId; }
 }
