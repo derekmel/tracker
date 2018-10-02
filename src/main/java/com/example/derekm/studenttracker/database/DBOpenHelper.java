@@ -31,11 +31,11 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     //Courses Table
     public static final String TABLE_COURSES = "courses";
     public static final String COURSE_TABLE_ID = "id";
-    public static final String COURSE_TERM_ID = "termId";
     public static final String COURSE_NAME = "name";
     public static final String COURSE_START = "start";
     public static final String COURSE_END = "courseEnd";
     public static final String COURSE_STATUS = "status";
+    public static final String COURSE_TERM_ID = "termId";
 
 
     //Mentor Table
@@ -89,11 +89,11 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     private static final String TABLE_COURSES_CREATE =
             "CREATE TABLE " + TABLE_COURSES + " (" +
                     COURSE_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COURSE_TERM_ID + " INTEGER, " +
                     COURSE_NAME + " TEXT, " +
                     COURSE_START + " DATE, " +
                     COURSE_END + " DATE, " +
                     COURSE_STATUS + " TEXT, " +
+                    COURSE_TERM_ID + " INTEGER, " +
                     "FOREIGN KEY(" + COURSE_TERM_ID + ") " + " REFERENCES " + TABLE_TERMS + "(" + TERMS_TABLE_ID + ")" + ")";
 
     //Mentors SQL
