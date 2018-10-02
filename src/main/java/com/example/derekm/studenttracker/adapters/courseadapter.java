@@ -25,8 +25,8 @@ public class courseadapter extends ArrayAdapter<Course> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_courses, parent, false);
 
             Course onecItem = getItem(position);
-            TextView term = convertView.findViewById(R.id.list_c_one);
-            term.setText(onecItem.getName());
+            TextView course = convertView.findViewById(R.id.list_c_one);
+            course.setText(onecItem.getName());
 
         }
         return convertView;

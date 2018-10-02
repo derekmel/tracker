@@ -19,6 +19,7 @@ public class newTermActivity extends AppCompatActivity {
     private EditText nameInput;
     private EditText startInput;
     private EditText endInput;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class newTermActivity extends AppCompatActivity {
 
         //this adds a new entry instead of edit.
 
-        Intent intent = getIntent();
+        intent = getIntent();
         String name, start, end;
         if (intent.hasExtra("name")) {
             name = intent.getStringExtra("name");
@@ -56,6 +57,7 @@ public class newTermActivity extends AppCompatActivity {
         String start = startInput.getText().toString();
         String end = endInput.getText().toString();
         long l = db.createTerm(name, start, end);
+        //db.deleteTerm(intent.getLongExtra("id", 1)); This is removing any new data, not just edited data
 
         Intent back = new Intent(this, termsListActivity.class);
         startActivity(back);

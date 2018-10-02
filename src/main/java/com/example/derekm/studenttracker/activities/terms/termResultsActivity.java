@@ -47,6 +47,7 @@ public class termResultsActivity extends AppCompatActivity {
 
     public void editButtonHandler(View view) {
         Intent intent = new Intent(this, newTermActivity.class);
+        intent.putExtra("id", term.getId());
         intent.putExtra("name" , term.getName());
         intent.putExtra("start", term.getStart());
         intent.putExtra("end", term.getEnd());

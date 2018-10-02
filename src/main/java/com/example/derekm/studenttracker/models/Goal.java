@@ -3,14 +3,14 @@ package com.example.derekm.studenttracker.models;
 public class Goal {
 
     private long goalDateId;
-    private String description;
-    private String datetime;
+    public String description;
+    public String date;
     private long assessmentId;
 
-    public Goal(long goalDateId, String description, String datetime, long assessmentId) {
+    public Goal(long goalDateId, String description, String date, long assessmentId) {
         this.goalDateId = goalDateId;
         this.description = description;
-        this.datetime = datetime;
+        this.date = date;
         this.assessmentId = assessmentId;
     }
 
@@ -31,11 +31,11 @@ public class Goal {
     }
 
     public String getDatetime() {
-        return datetime;
+        return date;
     }
 
     public void setDatetime(String datetime) {
-        this.datetime = datetime;
+        this.date = date;
     }
 
     public long getAssessmentId() {

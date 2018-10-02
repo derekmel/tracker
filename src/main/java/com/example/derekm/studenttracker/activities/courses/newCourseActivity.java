@@ -92,6 +92,7 @@ public class newCourseActivity  extends AppCompatActivity {
         String end = endInput.getText().toString();
         String status = statusInput.getText().toString();
         long termId = term.getId();//course needs to be attached to a specific term ID
+        //db.deleteCourse(getIntent().getLongExtra("id", 1));  This is deleting the entry on a new course
 
         mentorList = new ArrayList<>();
         mentorList.add(new Mentor(

@@ -87,6 +87,7 @@ public class courseResultsActivity extends AppCompatActivity {
 
     public void editButtonHandler(View view) {
         Intent intent1 = new Intent(this, newCourseActivity.class);
+        intent1.putExtra("id", course.getId());
         intent1.putExtra("name" , course.getName());
         intent1.putExtra("start", course.getStart());
         intent1.putExtra("end", course.getEnd());
