@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton3"
+        android:id="@+id/assessmentButtonHandler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -22,6 +22,7 @@
         android:layout_marginBottom="50dp"
         android:layout_marginEnd="50dp"
         android:clickable="true"
+        android:onClick="newAssessmentButtonHandler"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>

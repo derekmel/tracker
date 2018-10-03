@@ -2,24 +2,21 @@ package com.example.derekm.studenttracker.models;
 
 public class Goal {
 
-    private long goalDateId;
     public String description;
     public String date;
-    private long assessmentId;
 
-    public Goal(long goalDateId, String description, String date, long assessmentId) {
-        this.goalDateId = goalDateId;
+    public Goal(String description, String date) {
         this.description = description;
         this.date = date;
-        this.assessmentId = assessmentId;
+
     }
 
-    public long getGoalDateId() {
-        return goalDateId;
-    }
-
-    public void setGoalDateId(long goalDateId) {
-        this.goalDateId = goalDateId;
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "description='" + description + '\'' +
+                ", date='" + date + '\'' +
+                '}';
     }
 
     public String getDescription() {
@@ -30,19 +27,12 @@ public class Goal {
         this.description = description;
     }
 
-    public String getDatetime() {
+    public String getDate() {
         return date;
     }
 
-    public void setDatetime(String datetime) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public long getAssessmentId() {
-        return assessmentId;
-    }
-
-    public void setAssessmentId(long assessmentId) {
-        this.assessmentId = assessmentId;
-    }
 }

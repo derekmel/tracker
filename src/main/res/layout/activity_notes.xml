@@ -6,12 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".activities.courses.notesActivity">
 
+    <EditText
+        android:id="@+id/note_insert"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:hint="Enter Note" />
+
+    <Button
+        android:id="@+id/note_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:onClick="addNoteButtonHandler"
+        android:text="Add" />
+
+
     <ListView
         android:id="@+id/noteslist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="410dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="53dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton3"

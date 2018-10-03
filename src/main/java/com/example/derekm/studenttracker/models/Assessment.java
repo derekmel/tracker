@@ -18,6 +18,16 @@ public class Assessment {
         this.courseId = courseId;
     }
 
+    @Override
+    public String toString() {
+        return "Assessment{" +
+                "assessmentId=" + assessmentId +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", due='" + due + '\'' +
+                ", courseId=" + courseId +
+                '}';
+    }
 
     public long getAssessmentId() {
         return assessmentId;

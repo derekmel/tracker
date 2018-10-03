@@ -12,6 +12,9 @@ import com.example.derekm.studenttracker.models.Course;
 import com.example.derekm.studenttracker.adapters.noteadapter;
 import com.example.derekm.studenttracker.models.Note;
 import java.util.ArrayList;
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -38,7 +41,18 @@ public class notesActivity extends AppCompatActivity {
     ListAdapter Adapter = new noteadapter(this, NoteList);
     ListView list = findViewById(R.id.noteslist);
     list.setAdapter(Adapter);
-    //list.setOnItemClickListener();
+    list.setOnItemClickListener(
+            new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Course course = (Course) adapterView.getAdapter().getItem(i);
+
+                    //Intent intent = new Intent (notesActivity.this, notesResultsActivity.class);
+                    //intent.putExtra("courseId", course.getId());
+                    //startActivity(intent);
+                }
+            }
+    );
     }
 
 

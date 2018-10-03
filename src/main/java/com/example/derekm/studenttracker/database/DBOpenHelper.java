@@ -50,27 +50,27 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     // Course Notes table
     public static final String TABLE_COURSE_NOTES = "courseNotes";
     public static final String COURSE_NOTES_TABLE_ID = "id";
-    public static final String COURSE_NOTE_COURSE_ID = "courseId";
     public static final String COURSE_NOTE_TEXT = "noteText";
     public static final String COURSE_NOTE_CREATED = "noteCreated";
+    public static final String COURSE_NOTE_COURSE_ID = "courseId";
 
 
     // Assessments table
     public static final String TABLE_ASSESSMENTS = "assessments";
     public static final String ASSESSMENTS_TABLE_ID = "id";
-    public static final String ASSESSMENT_COURSE_ID = "assessmentCourseId";
-    public static final String ASSESSMENT_TYPE = "type";
     public static final String ASSESSMENT_NAME = "name";
-    public static final String ASSESSMENT_DESCRIPTION = "description";
-    public static final String ASSESSMENT_DATETIME = "datetime";
+    public static final String ASSESSMENT_TYPE = "type";
+    public static final String ASSESSMENT_DATETIME = "date";
+    //public static final String ASSESSMENT_DESCRIPTION = "description";
     public static final String ASSESSMENT_NOTIFICATIONS = "notifications";
+    public static final String ASSESSMENT_COURSE_ID = "assessmentCourseId";
 
 
     // Goals table
     private static final String TABLE_GOAL = "goalDates";
     private static final String GOAL_DATE_ID = "goalDateId";
     private static final String GOAL_DESCRIPTION = "description";
-    private static final String GOAL_DATE = "datetime";
+    private static final String GOAL_DATE = "date";
     private static final String GOAL_ASSESSMENT_ID = "assessmentId";
 
 
@@ -110,21 +110,21 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     private static final String TABLE_COURSE_NOTES_CREATE =
             "CREATE TABLE " + TABLE_COURSE_NOTES + " (" +
                     COURSE_NOTES_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COURSE_NOTE_COURSE_ID + " INTEGER, " +
                     COURSE_NOTE_TEXT + " TEXT, " +
                     COURSE_NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP, " +
+                    COURSE_NOTE_COURSE_ID + " INTEGER, " +
                     "FOREIGN KEY(" + COURSE_NOTE_COURSE_ID + ") " + " REFERENCES " + TABLE_COURSES + "(" + COURSE_TABLE_ID + ")" + ")";
 
     //Assessments SQL
     private static final String TABLE_ASSESSMENTS_CREATE =
             "CREATE TABLE " + TABLE_ASSESSMENTS + " (" +
                     ASSESSMENTS_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    ASSESSMENT_COURSE_ID + " INTEGER, " +
-                    ASSESSMENT_TYPE + " TEXT, " +
                     ASSESSMENT_NAME + " TEXT, " +
-                    ASSESSMENT_DESCRIPTION + " TEXT, " +
+                    ASSESSMENT_TYPE + " TEXT, " +
+                    //ASSESSMENT_DESCRIPTION + " TEXT, " +
                     ASSESSMENT_DATETIME + " DATE, " +
                     ASSESSMENT_NOTIFICATIONS + " INTEGER, " +
+                    ASSESSMENT_COURSE_ID + " INTEGER, " +
                     "FOREIGN KEY(" + ASSESSMENT_COURSE_ID + ") " + " REFERENCES " + TABLE_COURSES + "(" + COURSE_TABLE_ID + ")" + ")";
 
     // goal dates sql
@@ -434,11 +434,11 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
     //assessment stuff
-    /*
-    public boolean createAssessment(
+
+    public long createAssessment(
             String name,
             String type,
-            String datetime,
+            String date,
             long courseId,
             ArrayList<Goal> goalDates
     ) {
@@ -446,19 +446,19 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         ContentValues cv = new ContentValues();
         cv.put(ASSESSMENT_NAME, name);
         cv.put(ASSESSMENT_TYPE, type);
-        cv.put(ASSESSMENT_DATETIME, datetime);
+        cv.put(ASSESSMENT_DATETIME, date);
         cv.put(ASSESSMENT_COURSE_ID, courseId);
         long assessmentId = db.insert(TABLE_ASSESSMENTS, null, cv);
         for (Goal goalDate : goalDates) {
             ContentValues cv1 = new ContentValues();
-            cv1.put(GOAL_DESCRIPTION, goalDate.description());
-            cv1.put(GOAL_DATE, goalDate.date());
+            cv1.put(GOAL_DESCRIPTION, goalDate.getDescription());
+            cv1.put(GOAL_DATE, goalDate.getDate());
             cv1.put(GOAL_ASSESSMENT_ID, assessmentId);
             db.insert(TABLE_GOAL, null, cv1);
         }
-        return true;
+        return assessmentId;
     }
-    */
+
 
 /*
     public boolean updateAssessment(
@@ -519,12 +519,12 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
         res.moveToFirst();
         while (!res.isAfterLast()) {
-            long mId = res.getLong(0);
+            long Id = res.getLong(0);
             String name = res.getString(1);
             String type = res.getString(2);
             String due = res.getString(3);
-            long tcourseId = res.getLong(4);
-            a.add(new Assessment(mId, name, type, due, tcourseId));
+            long CourseId = res.getLong(4);
+            a.add(new Assessment(Id, name, type, due, CourseId));
             res.moveToNext();
         }
         res.close();
@@ -544,9 +544,9 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
     //goal stuff
-/*
-    public ArrayList<GoalDate> getGoalDates(long assessmentId) {
-        ArrayList<GoalDate> a = new ArrayList<>();
+
+    public ArrayList<Goal> getGoalDates(long assessmentId) {
+        ArrayList<Goal> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
                 "SELECT * FROM " + TABLE_GOAL + " WHERE " + GOAL_ASSESSMENT_ID + " = " + assessmentId,
@@ -556,19 +556,12 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         while (!res.isAfterLast()) {
             String Description = res.getString(1);
             String Date = res.getString(2);
-            a.add(new GoalDate(Description, Date));
+            a.add(new Goal(Description, Date));
             res.moveToNext();
         }
         res.close();
         return a;
     }
-*/
-
-
-
-
-
-
 
 
 

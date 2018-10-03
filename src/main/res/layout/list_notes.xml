@@ -19,21 +19,5 @@
         tools:layout_editor_absoluteY="16dp"
         android:layout_weight="10" />
 
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="-5dp"
-        android:layout_weight="1"
-        android:gravity="fill_vertical|center_horizontal|end"
-        android:text="View Note" />
-
-    <TextView
-        android:layout_width="35dp"
-        android:layout_height="50dp"
-        android:layout_weight=".1"
-        android:gravity="fill_vertical|center_horizontal"
-        android:paddingTop="10dp"
-        android:text=">"
-        android:textSize="30sp" />
 
 </LinearLayout>
