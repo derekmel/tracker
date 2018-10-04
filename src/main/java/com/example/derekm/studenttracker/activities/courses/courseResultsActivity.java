@@ -1,8 +1,10 @@
 package com.example.derekm.studenttracker.activities.courses;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListAdapter;
@@ -19,7 +21,11 @@ import com.example.derekm.studenttracker.activities.assessments.assesmentsActivi
 
 import java.util.ArrayList;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.util.List;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class courseResultsActivity extends AppCompatActivity {
     private DBOpenHelper db;
@@ -97,6 +103,46 @@ public class courseResultsActivity extends AppCompatActivity {
         //intent.putExtra("phone", mentor.getmentorphone());
         //intent.putExtra("email", mentor.getmentoremail());
         startActivity(intent1);
+
+    }
+
+    public void startAlertButtonHandler(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setMessage("Do you want an alert on your start date?");
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "Alert set", LENGTH_SHORT).show();
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "Alert not set", LENGTH_SHORT).show();
+            }
+        });
+        alert.create().show();
+
+    }
+
+    public void endAlertButtonHandler(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setMessage("Do you want an alert on your end date?");
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "Alert set", LENGTH_SHORT).show();
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "Alert not set", LENGTH_SHORT).show();
+            }
+        });
+        alert.create().show();
 
     }
 

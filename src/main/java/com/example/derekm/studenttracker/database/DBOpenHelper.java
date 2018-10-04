@@ -57,7 +57,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
     // Assessments table
     public static final String TABLE_ASSESSMENTS = "assessments";
-    public static final String ASSESSMENTS_TABLE_ID = "id";
+    public static final String ASSESSMENTS_TABLE_ID = "assessmentId";
     public static final String ASSESSMENT_NAME = "name";
     public static final String ASSESSMENT_TYPE = "type";
     public static final String ASSESSMENT_DATETIME = "date";
@@ -491,11 +491,11 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     }
     */
 
-    public Assessment getAssessment(long id) {
+    public Assessment getAssessment(long assessmentId) {
         Assessment assessment;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " + TABLE_ASSESSMENTS + " WHERE " + ASSESSMENTS_TABLE_ID + " = " + id,
+                "SELECT * FROM " + TABLE_ASSESSMENTS + " WHERE " + ASSESSMENTS_TABLE_ID + " = " + assessmentId,
                 null
         );
         res.moveToFirst();
@@ -534,9 +534,9 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
 
-    public boolean deleteAssessment(long id, long assessmentId) {
+    public boolean deleteAssessment(long assessmentId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ASSESSMENTS, ASSESSMENTS_TABLE_ID + " = " + id, null);
+        db.delete(TABLE_ASSESSMENTS, ASSESSMENTS_TABLE_ID + " = " + assessmentId, null);
         db.delete(TABLE_GOAL, GOAL_ASSESSMENT_ID + " = " + assessmentId, null);
         return true;
     }
