@@ -388,6 +388,23 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         db.delete(TABLE_COURSE_NOTES, COURSE_NOTES_TABLE_ID + " = " + id, null);
     }
 
+    public Note getNote(long id) {
+        Note note;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + TABLE_COURSE_NOTES + " WHERE " + COURSE_NOTES_TABLE_ID + " = " + id, null
+        );
+        res.moveToFirst();
+        note = new Note(
+                res.getLong(0),
+                res.getString(1),
+                res.getLong(2)
+        );
+        res.close();
+        return note;
+
+    }
+
     public ArrayList<Note> getNotes(long courseId) {
         ArrayList<Note> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();

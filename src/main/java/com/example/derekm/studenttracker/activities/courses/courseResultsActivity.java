@@ -63,10 +63,14 @@ public class courseResultsActivity extends AppCompatActivity {
     }
 
     public void addMentorButtonHandler(View view) {
+        //todo
+        //add dialog possibly?
 
     }
 
     public void removeMentorButtonHandler(View view) {
+        //todo
+        //more dialog??
 
     }
 
@@ -107,6 +111,7 @@ public class courseResultsActivity extends AppCompatActivity {
     }
 
     public void startAlertButtonHandler(View view) {
+        //todo add a way to take in the date input and alert on that date
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setMessage("Do you want an alert on your start date?");
@@ -127,6 +132,7 @@ public class courseResultsActivity extends AppCompatActivity {
     }
 
     public void endAlertButtonHandler(View view) {
+        //todo same as above
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setMessage("Do you want an alert on your end date?");

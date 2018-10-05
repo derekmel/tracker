@@ -23,6 +23,7 @@ package="com.example.derekm.studenttracker">
     <activity android:name=".activities.courses.newCourseActivity" />
     <activity android:name=".activities.courses.courseResultsActivity" />
     <activity android:name=".activities.courses.notesActivity" />
+    <activity android:name=".activities.courses.noteResultsActivity"/>
     <activity android:name=".activities.assessments.assesmentsActivity" />
     <activity android:name=".activities.assessments.newAssessmentActivity" />
     <activity android:name=".activities.assessments.assessmentResultsActivity" />

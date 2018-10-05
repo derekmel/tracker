@@ -24,6 +24,6 @@
         android:clickable="true"
         app:backgroundTint="@color/colorAccent"
         app:srcCompat="@android:drawable/ic_input_add"
-    android:onClick="newCourseAddButtonHandler"/>
+        android:onClick="newCourseAddButtonHandler"/>
 
 </RelativeLayout>

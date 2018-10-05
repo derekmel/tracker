@@ -58,6 +58,7 @@ public class assessmentResultsActivity extends AppCompatActivity {
     }
 
     public void editButtonHandler (View view) {
+        //todo add functionality
 
     }
 
@@ -69,6 +70,7 @@ public class assessmentResultsActivity extends AppCompatActivity {
     }
 
     public void alertButtonHandler (View view) {
+        //todo add date input for alert
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setMessage("Do you want an alert on your goal date?");
