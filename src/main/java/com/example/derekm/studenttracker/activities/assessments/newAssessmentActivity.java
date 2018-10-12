@@ -43,6 +43,12 @@ public class newAssessmentActivity extends AppCompatActivity {
 
 
         //logic to edit assessment info
+        Intent intent1 = getIntent();
+        String name, start, end;
+        if (intent1.hasExtra("name")) {
+            name = intent1.getStringExtra("name");
+            nameInput.setText(name);
+        }
     }
 
     public void saveButtonHandler (View view) {
@@ -61,6 +67,7 @@ public class newAssessmentActivity extends AppCompatActivity {
 
         Intent back = new Intent(this, assesmentsActivity.class);
         startActivity(back);
+        recreate();
 
 
 

@@ -1,12 +1,13 @@
 package com.example.derekm.studenttracker.models;
 
 public class Mentor {
-
+    private long id;
     private String name;
     private String phone;
     private String email;
 
     public Mentor(String name, String phone, String email) {
+        //this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -21,6 +22,10 @@ public class Mentor {
                 '}';
 
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getmentorname() {
         return name;

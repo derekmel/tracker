@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.example.derekm.studenttracker.R;
 import com.example.derekm.studenttracker.activities.terms.termsListActivity;
 import com.example.derekm.studenttracker.database.DBOpenHelper;
+import com.example.derekm.studenttracker.models.Term;
 
 
 public class newTermActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class newTermActivity extends AppCompatActivity {
     private EditText startInput;
     private EditText endInput;
     private Intent intent;
+    private Term term;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,7 @@ public class newTermActivity extends AppCompatActivity {
         startInput = findViewById(R.id.start_input);
         endInput = findViewById(R.id.end_input);
 
-        //this adds a new entry instead of edit.
-
-        intent = getIntent();
+        Intent intent = getIntent();
         String name, start, end;
         if (intent.hasExtra("name")) {
             name = intent.getStringExtra("name");
@@ -57,7 +57,6 @@ public class newTermActivity extends AppCompatActivity {
         String start = startInput.getText().toString();
         String end = endInput.getText().toString();
         long l = db.createTerm(name, start, end);
-        //db.deleteTerm(intent.getLongExtra("id", 1)); This is removing any new data, not just edited data
 
         Intent back = new Intent(this, termsListActivity.class);
         startActivity(back);

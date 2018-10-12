@@ -178,7 +178,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
 
-    public boolean updateTerm(int id, String name, String start, String termEnd) {
+    public boolean updateTerm(long id, String name, String start, String termEnd) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(TERM_NAME, name);
@@ -188,7 +188,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
                 TABLE_TERMS,
                 cv,
                 TERMS_TABLE_ID + " = ? ",
-                new String[] { Integer.toString(id) }
+                new String[] { Long.toString(id) }
         );
         return true;
     }
@@ -272,7 +272,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     }
 
     public boolean updateCourse(
-            int id,
+            long id,
             String name,
             String start,
             String courseEnd,
@@ -289,7 +289,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
                 TABLE_COURSES,
                 cv,
                 COURSE_TABLE_ID + " = ? ",
-                new String[] { Integer.toString(id) }
+                new String[] { Long.toString(id) }
         );
         for (Mentor mentor : mentors) {
             ContentValues cv1 = new ContentValues();
@@ -445,6 +445,13 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         }
         res.close();
         return a;
+    }
+
+    public boolean deleteMentor(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MENTOR, MENTOR_TABLE_ID + " = " + id, null);
+        return true;
+
     }
 
 

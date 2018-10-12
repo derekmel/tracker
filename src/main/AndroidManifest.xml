@@ -28,6 +28,11 @@ package="com.example.derekm.studenttracker">
     <activity android:name=".activities.assessments.newAssessmentActivity" />
     <activity android:name=".activities.assessments.assessmentResultsActivity" />
 
+    <receiver
+        android:name=".Receiver"
+        android:enabled="true"
+        android:exported="true" />
+
 </application>
 
 </manifest>

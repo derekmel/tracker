@@ -39,6 +39,8 @@ public class newCourseActivity  extends AppCompatActivity {
         db = new DBOpenHelper(this);
         Intent intent = getIntent();
         term = db.getTerm(intent.getLongExtra("termId", 1));
+        course = db.getCourse(intent.getLongExtra("courseId", 1));
+        //mentorList = db.getMentors(course.getId());
 
         cnameInput = findViewById(R.id.cname_input);
         startInput = findViewById(R.id.start_input);
@@ -49,13 +51,11 @@ public class newCourseActivity  extends AppCompatActivity {
         emailInput = findViewById(R.id.email_input);
 
 
-        //why is this adding a new courses entry??
-
         Intent intent1 = getIntent();
-        String name, start, end, status, mname, phone, email;
-        if (intent1.hasExtra("name")) {
-            name=intent1.getStringExtra("name");
-            cnameInput.setText(name);
+        String cname, start, end, status, name, phone, email;
+        if (intent1.hasExtra("cname")) {
+            cname=intent1.getStringExtra("cname");
+            cnameInput.setText(cname);
         }
         if (intent1.hasExtra("start")) {
             start=intent1.getStringExtra("start");
@@ -69,7 +69,7 @@ public class newCourseActivity  extends AppCompatActivity {
             status=intent1.getStringExtra("status");
             statusInput.setText(status);
         }
-        /*if (intent1.hasExtra("name")) {
+        if (intent1.hasExtra("name")) {
             name=intent1.getStringExtra("name");
             nameInput.setText(name);
         }
@@ -80,19 +80,18 @@ public class newCourseActivity  extends AppCompatActivity {
         if (intent1.hasExtra("email")) {
             email=intent1.getStringExtra("email");
             emailInput.setText(email);
-        }*/
+        }
 
 
     }
 
 
     public void saveCourseButtonHandler (View view) {
-        String name = cnameInput.getText().toString();
+        String cname = cnameInput.getText().toString();
         String start = startInput.getText().toString();
         String end = endInput.getText().toString();
         String status = statusInput.getText().toString();
-        long termId = term.getId();//course needs to be attached to a specific term ID
-        //db.deleteCourse(getIntent().getLongExtra("id", 1));  This is deleting the entry on a new course
+        long termId = term.getId();
 
         mentorList = new ArrayList<>();
         mentorList.add(new Mentor(
@@ -103,7 +102,13 @@ public class newCourseActivity  extends AppCompatActivity {
         ));
 
 
-        long l = db.createCourse(name, start, end, status, termId, mentorList);
+        Intent intent1 = getIntent();
+        if (intent1.hasExtra("cname")) {
+            db.updateCourse(intent1.getLongExtra("id", course.getId()), cname, start, end, status, mentorList);
+        }
+        else {
+            long l = db.createCourse(cname, start, end, status, termId, mentorList);
+        }
 
         Intent back = new Intent(this, coursesActivity.class);
         startActivity(back);
