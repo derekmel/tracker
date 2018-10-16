@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import com.example.derekm.studenttracker.models.Term;
@@ -277,6 +278,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
             String start,
             String courseEnd,
             String status,
+            long mentorId,
             ArrayList<Mentor> mentors
     ) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -285,6 +287,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         cv.put(COURSE_START, start);
         cv.put(COURSE_END, courseEnd);
         cv.put(COURSE_STATUS, status);
+        //System.out.println(Long.toString(id));
         db.update(
                 TABLE_COURSES,
                 cv,
@@ -297,9 +300,11 @@ public class DBOpenHelper extends SQLiteOpenHelper{
             cv1.put(MENTOR_PHONE, mentor.getmentorphone());
             cv1.put(MENTOR_EMAIL, mentor.getmentoremail());
             cv1.put(MENTOR_COURSE_ID, id);
-            db.insert(TABLE_MENTOR, null, cv1);
+
+            //db.insert(TABLE_MENTOR, null, cv1);
+            //this line works on update, but also updates on Add Mentor button instead of adding new mentor.
+            db.update(TABLE_MENTOR, cv1,MENTOR_TABLE_ID + " = ?", new String[] {Long.toString(mentorId)});
         }
-        db.delete(TABLE_MENTOR, MENTOR_COURSE_ID + " = " + id, null);
         return true;
     }
 
@@ -428,6 +433,28 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
     //mentor stuff
+
+    public boolean createMentor(
+            String name,
+            String phone,
+            String email,
+            long courseId,
+            ArrayList<Mentor> mentors
+    ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (Mentor mentor : mentors) {
+            ContentValues cv = new ContentValues();
+            cv.put(MENTOR_NAME, mentor.getmentorname());
+            cv.put(MENTOR_PHONE, mentor.getmentorphone());
+            cv.put(MENTOR_EMAIL, mentor.getmentoremail());
+            cv.put(MENTOR_COURSE_ID, courseId);
+            db.insert(TABLE_MENTOR, null, cv);
+        }
+        return true;
+
+    }
+
+
     public ArrayList<Mentor> getMentors(long courseId) {
         ArrayList<Mentor> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -437,15 +464,39 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
         res.moveToFirst();
         while (!res.isAfterLast()) {
+            Long id = res.getLong(0);
             String mName = res.getString(1);
             String mPhone = res.getString(2);
             String mEmail = res.getString(3);
-            a.add(new Mentor(mName, mPhone, mEmail));
+            Long mcourseId = res.getLong(4);
+            a.add(new Mentor(id, mName, mPhone, mEmail, mcourseId));
             res.moveToNext();
         }
         res.close();
         return a;
     }
+
+    //get one mentor
+    public Mentor getMentor(long courseId) {
+        Mentor mentor;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_MENTOR + " WHERE " + MENTOR_COURSE_ID + " = " + courseId;
+        Cursor res = db.rawQuery(
+                query, null
+        );
+        res.moveToFirst();
+        mentor = new Mentor(
+                res.getLong(0),
+                res.getString(1),
+                res.getString(2),
+                res.getString(3),
+                res.getLong(4)
+        );
+        res.close();
+        return mentor;
+    }
+
+
 
     public boolean deleteMentor(long id) {
         SQLiteDatabase db = this.getWritableDatabase();

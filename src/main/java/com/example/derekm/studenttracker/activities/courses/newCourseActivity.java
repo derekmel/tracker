@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import com.example.derekm.studenttracker.activities.terms.termsListActivity;
 import com.example.derekm.studenttracker.database.DBOpenHelper;
 import com.example.derekm.studenttracker.R;
 import com.example.derekm.studenttracker.models.Mentor;
@@ -21,6 +22,7 @@ public class newCourseActivity  extends AppCompatActivity {
     private ArrayList<Mentor> mentorList;
     private Term term;
     private Course course;
+    private Mentor mentor;
     private EditText cnameInput;
     private EditText startInput;
     private EditText endInput;
@@ -38,9 +40,13 @@ public class newCourseActivity  extends AppCompatActivity {
 
         db = new DBOpenHelper(this);
         Intent intent = getIntent();
-        term = db.getTerm(intent.getLongExtra("termId", 1));
-        course = db.getCourse(intent.getLongExtra("courseId", 1));
+        long l = intent.getLongExtra("termId", 100);
+        long i = intent.getLongExtra("id", 100);
+        long j = intent.getLongExtra("courseId", 100);
+        term = db.getTerm(intent.getLongExtra("termId", 100));
+        //course = db.getCourse(intent.getLongExtra("courseId", 1));
         //mentorList = db.getMentors(course.getId());
+        //long mentorId = mentor.getCourseId();
 
         cnameInput = findViewById(R.id.cname_input);
         startInput = findViewById(R.id.start_input);
@@ -52,7 +58,7 @@ public class newCourseActivity  extends AppCompatActivity {
 
 
         Intent intent1 = getIntent();
-        String cname, start, end, status, name, phone, email;
+        String cname, start, end, status, name, phone, email, id, mid;
         if (intent1.hasExtra("cname")) {
             cname=intent1.getStringExtra("cname");
             cnameInput.setText(cname);
@@ -81,6 +87,13 @@ public class newCourseActivity  extends AppCompatActivity {
             email=intent1.getStringExtra("email");
             emailInput.setText(email);
         }
+        if (intent1.hasExtra("id")) {
+            long d = intent1.getLongExtra("id", 1);
+        }
+        if (intent1.hasExtra("courseId")) {
+            long d = intent1.getLongExtra("courseId", 1);
+        }
+
 
 
     }
@@ -93,31 +106,52 @@ public class newCourseActivity  extends AppCompatActivity {
         String status = statusInput.getText().toString();
         long termId = term.getId();
 
-        mentorList = new ArrayList<>();
-        mentorList.add(new Mentor(
-                nameInput.getText().toString(),
-                phoneInput.getText().toString(),
-                emailInput.getText().toString()
-
-        ));
-
-
         Intent intent1 = getIntent();
-        if (intent1.hasExtra("cname")) {
-            db.updateCourse(intent1.getLongExtra("id", course.getId()), cname, start, end, status, mentorList);
+        if (intent1.hasExtra("id")) { //if there are courses already existing
+            course = db.getCourse(intent1.getLongExtra("id", 1));
+            mentor = db.getMentor(intent1.getLongExtra("courseId",1));
+            System.out.println(mentor);
+
+            long mentorId = mentor.getId();
+            System.out.println(mentor.getId());
+            long courseId = course.getId();
+            System.out.println(courseId);
+            mentorList = new ArrayList<>();
+            mentorList.add(new Mentor(
+                    mentorId,
+                    nameInput.getText().toString(),
+                    phoneInput.getText().toString(),
+                    emailInput.getText().toString(),
+                    courseId
+                    ));
+
+            db.updateCourse(intent1.getLongExtra("id", 100), cname, start,
+                    end, status, mentorId, mentorList);
         }
-        else {
+        else { //if no courses exist yet
+            long courseId = term.getId();
+            long mentorId = term.getId();
+            mentorList = new ArrayList<>();
+            mentorList.add(new Mentor(
+                    mentorId,
+                    nameInput.getText().toString(),
+                    phoneInput.getText().toString(),
+                    emailInput.getText().toString(),
+                    courseId
+
+            ));
+
             long l = db.createCourse(cname, start, end, status, termId, mentorList);
         }
 
-        Intent back = new Intent(this, coursesActivity.class);
+        Intent back = new Intent(this, termsListActivity.class);
         startActivity(back);
 
     }
 
 
     public void cancelAddCourseButtonHandler (View view) {
-        Intent courseIntent = new Intent(this, coursesActivity.class);
+        Intent courseIntent = new Intent(this, termsListActivity.class);
         startActivity(courseIntent);
 
     }

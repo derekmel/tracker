@@ -13,21 +13,11 @@
         android:id="@+id/delete_term"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/edit_term"
-        android:layout_marginTop="205dp"
-        android:onClick="deleteButtonHandler"
-        android:text="Delete" />
-
-    <Button
-        android:id="@+id/edit_term"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/courses_button"
-        android:layout_marginEnd="50dp"
-        android:onClick="editButtonHandler"
-        android:text="Edit" />
+        android:layout_marginEnd="53dp"
+        android:onClick="deleteButtonHandler"
+        android:text="Delete" />
 
     <GridLayout
         android:layout_width="match_parent"

@@ -61,5 +61,11 @@ public class Course {
 
     public void setStatus(String status) { this.status = status; }
 
+    public long getTermId() {
+        return termId;
+    }
 
+    public void setTermId(long termId) {
+        this.termId = termId;
+    }
 }
