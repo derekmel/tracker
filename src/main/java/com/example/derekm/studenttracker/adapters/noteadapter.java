@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.example.derekm.studenttracker.R;
-import com.example.derekm.studenttracker.models.Course;
 import com.example.derekm.studenttracker.models.Note;
 import android.content.Context;
 import android.widget.TextView;

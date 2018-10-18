@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 
 public class termsListActivity extends AppCompatActivity {
-    //public static final String TAG = "TermListActivity";
     private DBOpenHelper db;
 
 

@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 
 import com.example.derekm.studenttracker.R;
-import com.example.derekm.studenttracker.activities.terms.termsListActivity;
 import com.example.derekm.studenttracker.database.DBOpenHelper;
 import com.example.derekm.studenttracker.models.Term;
 
@@ -52,7 +51,6 @@ public class newTermActivity extends AppCompatActivity {
     }
 
     public void saveTermButtonHandler (View view) {
-        // save term details and add to list
         String name = nameInput.getText().toString();
         String start = startInput.getText().toString();
         String end = endInput.getText().toString();

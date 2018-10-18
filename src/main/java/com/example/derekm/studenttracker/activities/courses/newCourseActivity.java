@@ -44,9 +44,6 @@ public class newCourseActivity  extends AppCompatActivity {
         long i = intent.getLongExtra("id", 100);
         long j = intent.getLongExtra("courseId", 100);
         term = db.getTerm(intent.getLongExtra("termId", 100));
-        //course = db.getCourse(intent.getLongExtra("courseId", 1));
-        //mentorList = db.getMentors(course.getId());
-        //long mentorId = mentor.getCourseId();
 
         cnameInput = findViewById(R.id.cname_input);
         startInput = findViewById(R.id.start_input);
@@ -58,7 +55,7 @@ public class newCourseActivity  extends AppCompatActivity {
 
 
         Intent intent1 = getIntent();
-        String cname, start, end, status, name, phone, email, id, mid;
+        String cname, start, end, status, name, phone, email, id, courseId;
         if (intent1.hasExtra("cname")) {
             cname=intent1.getStringExtra("cname");
             cnameInput.setText(cname);
@@ -110,12 +107,9 @@ public class newCourseActivity  extends AppCompatActivity {
         if (intent1.hasExtra("id")) { //if there are courses already existing
             course = db.getCourse(intent1.getLongExtra("id", 1));
             mentor = db.getMentor(intent1.getLongExtra("courseId",1));
-            System.out.println(mentor);
 
             long mentorId = mentor.getId();
-            System.out.println(mentor.getId());
             long courseId = course.getId();
-            System.out.println(courseId);
             mentorList = new ArrayList<>();
             mentorList.add(new Mentor(
                     mentorId,

@@ -1,6 +1,6 @@
 package com.example.derekm.studenttracker.models;
 
-import java.io.Serializable;
+
 
 public class Assessment {
 
@@ -21,7 +21,7 @@ public class Assessment {
     @Override
     public String toString() {
         return "Assessment{" +
-                "assessmentId=" + assessmentId +
+                "id=" + assessmentId +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", due='" + due + '\'' +
@@ -29,12 +29,12 @@ public class Assessment {
                 '}';
     }
 
-    public long getAssessmentId() {
+    public long getId() {
         return assessmentId;
     }
 
-    public void setAssessmentId(long assessmentId) {
-        this.assessmentId = assessmentId;
+    public void setiId(long id) {
+        this.assessmentId = id;
     }
 
     public String getName() {

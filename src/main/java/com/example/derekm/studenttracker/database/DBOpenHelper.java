@@ -5,10 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import com.example.derekm.studenttracker.models.Term;
 import com.example.derekm.studenttracker.models.Course;
 import com.example.derekm.studenttracker.models.Note;
@@ -58,18 +55,17 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
     // Assessments table
     public static final String TABLE_ASSESSMENTS = "assessments";
-    public static final String ASSESSMENTS_TABLE_ID = "assessmentId";
+    public static final String ASSESSMENTS_TABLE_ID = "id";
     public static final String ASSESSMENT_NAME = "name";
     public static final String ASSESSMENT_TYPE = "type";
     public static final String ASSESSMENT_DATETIME = "date";
-    //public static final String ASSESSMENT_DESCRIPTION = "description";
     public static final String ASSESSMENT_NOTIFICATIONS = "notifications";
-    public static final String ASSESSMENT_COURSE_ID = "assessmentCourseId";
+    public static final String ASSESSMENT_COURSE_ID = "courseId";
 
 
     // Goals table
-    private static final String TABLE_GOAL = "goalDates";
-    private static final String GOAL_DATE_ID = "goalDateId";
+    private static final String TABLE_GOAL = "goals";
+    private static final String GOAL_DATE_ID = "id";
     private static final String GOAL_DESCRIPTION = "description";
     private static final String GOAL_DATE = "date";
     private static final String GOAL_ASSESSMENT_ID = "assessmentId";
@@ -166,7 +162,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     }
 
 
-// Terms data provider
+// Terms data
     public long createTerm(String name, String start, String termEnd) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -175,23 +171,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         cv.put(TERM_END, termEnd);
         long id = db.insert(TABLE_TERMS, null, cv);
         return id;
-    }
-
-
-
-    public boolean updateTerm(long id, String name, String start, String termEnd) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(TERM_NAME, name);
-        cv.put(TERM_START, start);
-        cv.put(TERM_END, termEnd);
-        db.update(
-                TABLE_TERMS,
-                cv,
-                TERMS_TABLE_ID + " = ? ",
-                new String[] { Long.toString(id) }
-        );
-        return true;
     }
 
 
@@ -241,9 +220,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     }
 
 
-
-
-
     //Courses stuff
     public long createCourse(
             String name,
@@ -287,7 +263,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         cv.put(COURSE_START, start);
         cv.put(COURSE_END, courseEnd);
         cv.put(COURSE_STATUS, status);
-        //System.out.println(Long.toString(id));
         db.update(
                 TABLE_COURSES,
                 cv,
@@ -363,10 +338,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
 
-
-
-
-
     //notes stuff
     public void insertNote(long courseId, String noteText) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -430,8 +401,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
     }
 
 
-
-
     //mentor stuff
 
     public boolean createMentor(
@@ -476,7 +445,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         return a;
     }
 
-    //get one mentor
     public Mentor getMentor(long courseId) {
         Mentor mentor;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -507,7 +475,6 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
 
-
     //assessment stuff
 
     public long createAssessment(
@@ -523,25 +490,25 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         cv.put(ASSESSMENT_TYPE, type);
         cv.put(ASSESSMENT_DATETIME, date);
         cv.put(ASSESSMENT_COURSE_ID, courseId);
-        long assessmentId = db.insert(TABLE_ASSESSMENTS, null, cv);
+        long id = db.insert(TABLE_ASSESSMENTS, null, cv);
         for (Goal goalDate : goalDates) {
             ContentValues cv1 = new ContentValues();
             cv1.put(GOAL_DESCRIPTION, goalDate.getDescription());
             cv1.put(GOAL_DATE, goalDate.getDate());
-            cv1.put(GOAL_ASSESSMENT_ID, assessmentId);
+            cv1.put(GOAL_ASSESSMENT_ID, id);
             db.insert(TABLE_GOAL, null, cv1);
         }
-        return assessmentId;
+        return id;
     }
 
 
-/*
     public boolean updateAssessment(
             long id,
             String name,
             String type,
             String datetime,
-            ArrayList<Goal> goalDates
+            long goalId,
+            ArrayList<Goal> goals
     ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -552,25 +519,25 @@ public class DBOpenHelper extends SQLiteOpenHelper{
                 TABLE_ASSESSMENTS,
                 cv,
                 ASSESSMENTS_TABLE_ID + " = ?",
-                new String[] { Integer.toString(id) }
+                new String[] { Long.toString(id) }
         );
-        db.delete(TABLE_GOAL, GOAL_ASSESSMENT_ID + " = " + assessmentId, null);
-        for (Goal goalDate : goalDates) {
+        //db.delete(TABLE_GOAL, GOAL_ASSESSMENT_ID + " = " + id, null);
+        for (Goal goal : goals) {
             ContentValues cv1 = new ContentValues();
-            cv1.put(GOAL_DESCRIPTION, goalDate.description());
-            cv1.put(GOAL_DATE, goalDate.date());
-            cv1.put(GOAL_ASSESSMENT_ID, assessmentId);
-            db.insert(TABLE_GOAL, null, cv1);
+            cv1.put(GOAL_DESCRIPTION, goal.getDescription());
+            cv1.put(GOAL_DATE, goal.getDate());
+            cv1.put(GOAL_ASSESSMENT_ID, id);
+            db.update(TABLE_GOAL, cv1, GOAL_DATE_ID + " = ?", new String[] {Long.toString(goalId)});
         }
         return true;
     }
-    */
 
-    public Assessment getAssessment(long assessmentId) {
+
+    public Assessment getAssessment(long id) {
         Assessment assessment;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
-                "SELECT * FROM " + TABLE_ASSESSMENTS + " WHERE " + ASSESSMENTS_TABLE_ID + " = " + assessmentId,
+                "SELECT * FROM " + TABLE_ASSESSMENTS + " WHERE " + ASSESSMENTS_TABLE_ID + " = " + id,
                 null
         );
         res.moveToFirst();
@@ -594,12 +561,12 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
         res.moveToFirst();
         while (!res.isAfterLast()) {
-            long Id = res.getLong(0);
+            long id = res.getLong(0);
             String name = res.getString(1);
             String type = res.getString(2);
             String due = res.getString(3);
             long CourseId = res.getLong(4);
-            a.add(new Assessment(Id, name, type, due, CourseId));
+            a.add(new Assessment(id, name, type, due, CourseId));
             res.moveToNext();
         }
         res.close();
@@ -609,10 +576,10 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
 
 
-    public boolean deleteAssessment(long assessmentId) {
+    public boolean deleteAssessment(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_ASSESSMENTS, ASSESSMENTS_TABLE_ID + " = " + assessmentId, null);
-        db.delete(TABLE_GOAL, GOAL_ASSESSMENT_ID + " = " + assessmentId, null);
+        db.delete(TABLE_ASSESSMENTS, ASSESSMENTS_TABLE_ID + " = " + id, null);
+        db.delete(TABLE_GOAL, GOAL_ASSESSMENT_ID + " = " + id, null);
         return true;
     }
 
@@ -620,7 +587,7 @@ public class DBOpenHelper extends SQLiteOpenHelper{
 
     //goal stuff
 
-    public ArrayList<Goal> getGoalDates(long assessmentId) {
+    public ArrayList<Goal> getGoals(long assessmentId) {
         ArrayList<Goal> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery(
@@ -629,13 +596,33 @@ public class DBOpenHelper extends SQLiteOpenHelper{
         );
         res.moveToFirst();
         while (!res.isAfterLast()) {
+            Long id = res.getLong(0);
             String Description = res.getString(1);
             String Date = res.getString(2);
-            a.add(new Goal(Description, Date));
+            Long massessmentId = res.getLong(3);
+            a.add(new Goal(id, Description, Date, massessmentId));
             res.moveToNext();
         }
         res.close();
         return a;
+    }
+
+    public Goal getGoal(long assessmentId) {
+        Goal goal;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_GOAL + " WHERE " + GOAL_ASSESSMENT_ID + " = " + assessmentId;
+        Cursor res = db.rawQuery(
+                query, null
+        );
+        res.moveToFirst();
+        goal = new Goal(
+                res.getLong(0),
+                res.getString(1),
+                res.getString(2),
+                res.getLong(3)
+        );
+        res.close();
+        return goal;
     }
 
 

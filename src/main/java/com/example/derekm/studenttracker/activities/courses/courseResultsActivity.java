@@ -57,7 +57,6 @@ public class courseResultsActivity extends AppCompatActivity {
 
         term = db.getTerm(intent.getLongExtra("termId", 1));
         course = db.getCourse(intent.getLongExtra("courseId", 1));
-        //mentor = db.getMentor(intent.getLongExtra("id", 0));
         mentor = db.getMentor(intent.getLongExtra("courseId", 100));
 
         TextView name = findViewById(R.id.course_name);
@@ -104,8 +103,7 @@ public class courseResultsActivity extends AppCompatActivity {
                         courseId
                 ));
                 db.createMentor(mentor.getmentorname(), mentor.getmentorphone(), mentor.getmentoremail(), course.getId(), mentors);
-                //db.updateCourse(course.getId(), course.getName(), course.getStart(),
-                        //course.getEnd(), course.getStatus(), mentors);
+
 
                 recreate();
 
@@ -122,22 +120,9 @@ public class courseResultsActivity extends AppCompatActivity {
     }
 
     public void removeMentorButtonHandler(View view) {
-        //todo remove mentor button
-
-
         mentor = db.getMentor(mentor.getId());
-        System.out.println(mentor);
-          //db.deleteMentor(mentor.getId());
+        db.deleteMentor(mentor.getId());
         recreate();
-
-
-        //Intent r = new Intent(this, coursesActivity.class);
-        //startActivity(r);
-
-
-        //System.out.print(p);
-        //mentors.remove(p);
-        //recreate();
 
     }
 
@@ -167,7 +152,6 @@ public class courseResultsActivity extends AppCompatActivity {
         intent1.putExtra("termId", course.getTermId());
         intent1.putExtra("id", course.getId());
         intent1.putExtra("courseId", mentor.getcourseId());
-        System.out.println(mentor.getcourseId());
         intent1.putExtra("cname" , course.getName());
         intent1.putExtra("start", course.getStart());
         intent1.putExtra("end", course.getEnd());
@@ -253,7 +237,6 @@ public class courseResultsActivity extends AppCompatActivity {
     public void endAlertButtonHandler(View view) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         final String anything3 = course.getEnd();
-        System.out.println(anything3);
 
         final String anything4 = course.getName();
 
@@ -280,12 +263,12 @@ public class courseResultsActivity extends AppCompatActivity {
         String dateInString = date;
         Date date2 = sdf.parse(dateInString);
         long milli = date2.getTime();
-        System.out.println(milli);
+
         Calendar calendar = dateToCalendar2(date2);
         long now = System.currentTimeMillis();
-        System.out.println(now);
+
         long diff = milli-now;
-        System.out.println(diff);
+
         if(diff <= 10000) {
             diff = 3000;
         }

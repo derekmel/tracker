@@ -11,9 +11,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import com.example.derekm.studenttracker.R;
-import com.example.derekm.studenttracker.activities.courses.courseResultsActivity;
-import com.example.derekm.studenttracker.activities.courses.coursesActivity;
-import com.example.derekm.studenttracker.activities.courses.newCourseActivity;
 import com.example.derekm.studenttracker.models.Assessment;
 import com.example.derekm.studenttracker.models.Course;
 import com.example.derekm.studenttracker.database.DBOpenHelper;
@@ -47,7 +44,7 @@ public class assesmentsActivity extends AppCompatActivity {
                         Assessment assessment = (Assessment) adapterView.getAdapter().getItem(i);
 
                         Intent intent = new Intent (assesmentsActivity.this, assessmentResultsActivity.class);
-                        intent.putExtra("assessmentId", assessment.getAssessmentId());
+                        intent.putExtra("assessmentId", assessment.getId());
                         intent.putExtra("courseId", course.getId());
                         startActivity(intent);
                     }

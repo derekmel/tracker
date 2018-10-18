@@ -1,13 +1,13 @@
 package com.example.derekm.studenttracker.adapters;
 
-import android.content.ContentProvider;
+
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
 import android.view.ViewGroup;
 import android.view.View;
 import com.example.derekm.studenttracker.R;
 import com.example.derekm.studenttracker.models.Course;
-import com.example.derekm.studenttracker.models.Term;
+
 
 import android.content.Context;
 import android.widget.TextView;
